@@ -1285,6 +1285,7 @@
 		};
 	};
 
+
 	flexcan2 {
 		pinctrl_flexcan2_1: flexcan2grp-1 {
 			fsl,pins = <
@@ -1605,6 +1606,16 @@
 				MX6QDL_PAD_EIM_D29__UART2_RTS_B	    0x1b0b1
 			>;
 		};
+		pinctrl_uart2_4: uart2grp-4 { /* RTS/CTS only mode */
+			fsl,pins = <
+				MX6QDL_PAD_EIM_D27__UART2_RX_DATA   0x1b0b1
+				MX6QDL_PAD_EIM_D26__UART2_TX_DATA   0x1b0b1
+				MX6QDL_PAD_EIM_D28__UART2_CTS_B	    0x1b0b1
+				MX6QDL_PAD_EIM_D29__UART2_RTS_B	    0x1b0b1
+			>;
+		};
+
+
 	};
 
 	uart3 {
@@ -1632,6 +1643,16 @@
 				MX6QDL_PAD_EIM_D24__UART3_TX_DATA 0x1b0b1
 				MX6QDL_PAD_EIM_D23__UART3_CTS_B   0x1b0b1
 				MX6QDL_PAD_EIM_EB3__UART3_RTS_B   0x1b0b1
+			>;
+		};
+
+		/* Customer Uart2 support */
+		pinctrl_uart3_3: uart3grp-3 {	/* RX/TX RTS/CTS */
+			fsl,pins = <
+				MX6QDL_PAD_EIM_D25__UART3_RX_DATA 0x1b0b1
+				MX6QDL_PAD_EIM_D24__UART3_TX_DATA 0x1b0b1
+				//MX6QDL_PAD_EIM_D23__UART3_CTS_B   0x1b0b1
+				//MX6QDL_PAD_EIM_EB3__UART3_RTS_B   0x1b0b1
 			>;
 		};
 	};

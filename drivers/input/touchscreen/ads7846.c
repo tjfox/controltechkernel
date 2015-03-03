@@ -127,6 +127,8 @@ struct ads7846 {
 	int			read_cnt;
 	int			read_rep;
 	int			last_read;
+	int			last_y;
+	int			last_x;
 
 	u16			debounce_max;
 	u16			debounce_tol;
@@ -860,16 +862,31 @@ static void ads7846_report_state(struct ads7846 *ts)
 			swap(x, y);
 
 		if (!ts->pendown) {
+			ts->last_x = (-1);
 			input_report_key(input, BTN_TOUCH, 1);
 			ts->pendown = true;
 			dev_vdbg(&ts->spi->dev, "DOWN\n");
 		}
 
-		input_report_abs(input, ABS_X, x);
-		input_report_abs(input, ABS_Y, y);
-		input_report_abs(input, ABS_PRESSURE, ts->pressure_max - Rt);
+		if(ts->last_x == (-1) ||
+				(abs(ts->last_x - x) < 80 && abs(ts->last_y - y) < 80)) {
 
-		input_sync(input);
+			if (ts->last_x != (-1)) {
+				input_report_abs(input, ABS_X, x);
+				input_report_abs(input, ABS_Y, y);
+				input_report_abs(input, ABS_PRESSURE, ts->pressure_max - Rt);
+
+				input_sync(input);
+			}
+
+			ts->last_x = x;
+			ts->last_y = y;
+		}
+		else {
+			ts->last_x = (-1);
+		}
+
+
 		dev_vdbg(&ts->spi->dev, "%4d/%4d/%4d\n", x, y, Rt);
 	}
 }
@@ -894,7 +911,7 @@ static irqreturn_t ads7846_irq(int irq, void *handle)
 		/* pen is down, continue with the measurement */
 		ads7846_read_state(ts);
 
-		if (!ts->stopped)
+		if (!ts->stopped && get_pendown_state(ts))
 			ads7846_report_state(ts);
 
 		wait_event_timeout(ts->wait, ts->stopped,
