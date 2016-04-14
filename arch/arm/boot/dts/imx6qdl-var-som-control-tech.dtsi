@@ -702,7 +702,7 @@
 	status = "okay";
 };
 
-usdhc3 {	/* uSDHC3, TiWi wl1271 7 Wilink8 WL18xx*/
+&usdhc3 {	/* uSDHC3, TiWi wl1271 7 Wilink8 WL18xx*/
 	pinctrl-names = "default", "state_100mhz", "state_200mhz";
 	pinctrl-0 = <&pinctrl_usdhc3_2>;
 	pinctrl-1 = <&pinctrl_usdhc3_2_100mhz>;
@@ -714,8 +714,6 @@ usdhc3 {	/* uSDHC3, TiWi wl1271 7 Wilink8 WL18xx*/
 	non-removable;
 	cap-power-off-card;
 	status = "okay";
-	#address-cells = <1>;
-	#size-cells = <0>;
 	wlcore: wlcore {
 		compatible = "ti,wl1271";
 #if 0
