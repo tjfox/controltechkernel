@@ -14,7 +14,6 @@
  *
  */
 
-#include <linux/wl12xx.h>
 
 / {
 	aliases {
@@ -729,7 +728,7 @@
 		interrupts = <17 1>;
 
 		/* if a 12xx card is there, configure the clock to WL12XX_REFCLOCK_38_XTAL */
-		board-ref-clock = <WL12XX_REFCLOCK_38_XTAL>;
+		board-ref-clock = <4>;
 	};
 
 };
