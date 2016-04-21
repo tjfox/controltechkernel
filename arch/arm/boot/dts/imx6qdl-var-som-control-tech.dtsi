@@ -717,7 +717,7 @@
 	status = "okay";
 	wlcore: wlcore {
 		compatible = "ti,wl1271";
-#if 0
+#if 1
 		gpio = <177>;   /* The wl8 driver expects gpio to be an integer, so gpio6_17 is (6-1)*32+17=207
 		        	   irq property must not be set as driver derives irq number from gpio if no irq set
 	 			   use edge irqs for suspend/resume */
